@@ -36,13 +36,16 @@ function Login() {
   };
 
   useEffect(() => {
+    localStorage.getItem('user');
     validateButton();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginInfo.password]);
 
   /*   const history = useHistory(); */
   const handleClick = async () => {
-    console.log('dale');
+    localStorage.setItem('user', JSON.stringify({ email: loginInfo.email }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('drinksToken', 1);
     /*     history.push(); */
   };
 
