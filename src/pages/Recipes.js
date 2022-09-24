@@ -3,28 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from '../components/Card';
 import { fetchApiDrinks, fetchApiMeals } from '../redux/actions/actionRecipeApi';
+import LoadingCard from '../components/LoadingCard';
 
-function Recipes(props) {
+function Recipes({ match, dispatch, Loading }) {
   useEffect(() => {
-    const { match, dispatch } = props;
     const { path } = match;
     if (path === '/drinks') {
       dispatch(fetchApiDrinks());
     } else {
       dispatch(fetchApiMeals());
     }
-  }, [props]);
+  }, [dispatch, match]);
 
-  return (
-    <div>
-      <Card />
-    </div>
-  );
+  return Loading ? <LoadingCard /> : <Card />;
 }
 
 Recipes.propTypes = {
   match: PropTypes.shape().isRequired,
   dispatch: PropTypes.func.isRequired,
+  Loading: PropTypes.bool.isRequired,
 };
 
-export default connect()(Recipes);
+const mapStateToProps = (state) => ({
+  Loading: state.RecipesAPI.LoadingAPI,
+});
+
+export default connect(mapStateToProps, null)(Recipes);

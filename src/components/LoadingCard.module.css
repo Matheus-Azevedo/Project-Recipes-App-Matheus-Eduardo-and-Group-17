@@ -1,0 +1,13 @@
+.LoadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.LoadingContainer p {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  color: orange;
+}

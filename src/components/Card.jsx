@@ -7,9 +7,6 @@ function Card({ RecipesMeals, RecipesDrinks, Category }) {
 
   if (Category === '/drinks') recipes = RecipesDrinks;
 
-  if (RecipesMeals.length === 0 && RecipesDrinks.length === 0) {
-    return <p>Carregando...</p>;
-  }
   return (
     <div className={ Styles.Card }>
       {
@@ -37,9 +34,14 @@ function Card({ RecipesMeals, RecipesDrinks, Category }) {
   );
 }
 
+Card.defaultProps = {
+  RecipesMeals: [],
+  RecipesDrinks: [],
+};
+
 Card.propTypes = {
-  RecipesMeals: PropTypes.shape().isRequired,
-  RecipesDrinks: PropTypes.shape().isRequired,
+  RecipesMeals: PropTypes.arrayOf(PropTypes.objectOf),
+  RecipesDrinks: PropTypes.arrayOf(PropTypes.objectOf),
   Category: PropTypes.string.isRequired,
 };
 
