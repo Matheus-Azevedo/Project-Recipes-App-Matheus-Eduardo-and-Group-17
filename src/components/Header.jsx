@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
 
 function Header(props) {
+  const history = useHistory();
+  const [showSearchBar, setSearchBar] = useState(false);
   const { title } = props;
+
+  function goToProfile() {
+    history.push('/profile');
+  }
+
+  function showTheSearchBar() {
+    if (showSearchBar) {
+      return setSearchBar(false);
+    }
+    return setSearchBar(true);
+  }
+
   if (
     title === 'Favorite Recipes'
     || title === 'Done Recipes'
@@ -17,6 +32,7 @@ function Header(props) {
           data-testid="profile-top-btn"
           type="button"
           src={ ProfileIcon }
+          onClick={ goToProfile }
         >
           <img src={ ProfileIcon } alt="Profile Icon" />
           Perfil
@@ -24,6 +40,7 @@ function Header(props) {
       </header>
     );
   }
+
   return (
     <header>
       <h1 data-testid="page-title">{ title }</h1>
@@ -31,6 +48,7 @@ function Header(props) {
         data-testid="profile-top-btn"
         type="button"
         src={ ProfileIcon }
+        onClick={ goToProfile }
       >
         <img src={ ProfileIcon } alt="Profile Icon" />
         Perfil
@@ -39,10 +57,16 @@ function Header(props) {
         data-testid="search-top-btn"
         type="button"
         src={ SearchIcon }
+        onClick={ showTheSearchBar }
       >
         <img src={ SearchIcon } alt="Search Icon" />
         Search
       </button>
+      { showSearchBar && (
+        <label htmlFor="search-input">
+          <input data-testid="search-input" type="text" />
+        </label>
+      ) }
     </header>
   );
 }
