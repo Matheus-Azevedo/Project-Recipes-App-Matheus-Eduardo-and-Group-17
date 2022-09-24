@@ -6,16 +6,6 @@ import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import DoneRecipes from '../pages/DoneRecipes';
 
 describe('Testando o componente Header através da página <Meals />', () => {
-  test('Verifica se existe o button para o Profile', () => {
-    renderWithRouterAndRedux(<Meals />);
-    const profileBtn = screen.getByTestId('profile-top-btn');
-    expect(profileBtn).toBeInTheDocument();
-  });
-  test('Verifica se existe o button para o Search', () => {
-    renderWithRouterAndRedux(<Meals />);
-    const searchBtn = screen.getByTestId('search-top-btn');
-    expect(searchBtn).toBeInTheDocument();
-  });
   test('Verifica se existe o Titulo Meals', () => {
     renderWithRouterAndRedux(<Meals />);
     const pageTitle = screen.getByText(/Meals/i);
