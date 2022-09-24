@@ -1,13 +1,14 @@
 .LoadingContainer {
-  display: flex;
   align-items: center;
-  justify-content: center;
+  display: flex;
   height: 100vh;
+  justify-content: center;
 }
 
 .LoadingContainer p {
-  font-family: sans-serif;
   color: orange;
+  font-family: sans-serif;
   font-size: 25px;
   font-weight: 700;
 }
+
