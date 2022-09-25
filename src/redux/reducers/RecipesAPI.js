@@ -1,6 +1,8 @@
 const INITIAL_STATE = {
   DataRecipesMeals: [],
   DataRecipesDrinks: [],
+  DataCategoryDrinks: [],
+  DataCategoryMeals: [],
   Category: '',
   LoadingAPI: true,
 };
@@ -11,12 +13,14 @@ function RecipesAPI(state = INITIAL_STATE, action) {
     return {
       ...state,
       DataRecipesMeals: action.data,
+      DataCategoryMeals: action.categoryMeals,
       LoadingAPI: false,
     };
   case 'DRINKS_API':
     return {
       ...state,
       DataRecipesDrinks: action.data,
+      DataCategoryDrinks: action.categoryDrink,
       Category: '/drinks',
       LoadingAPI: false,
     };

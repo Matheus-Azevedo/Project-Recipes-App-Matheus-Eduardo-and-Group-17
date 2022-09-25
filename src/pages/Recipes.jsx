@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Card from '../components/Card';
 import { fetchApiDrinks, fetchApiMeals } from '../redux/actions/actionRecipeApi';
 import LoadingCard from '../components/LoadingCard';
+import CategoryButtons from '../components/CategoryButtons';
 
 function Recipes({ match, dispatch, Loading }) {
   useEffect(() => {
@@ -15,7 +16,12 @@ function Recipes({ match, dispatch, Loading }) {
     }
   }, [dispatch, match]);
 
-  return Loading ? <LoadingCard /> : <Card />;
+  return Loading ? <LoadingCard /> : (
+    <>
+      <CategoryButtons />
+      <Card />
+    </>
+  );
 }
 
 Recipes.propTypes = {
