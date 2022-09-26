@@ -7,8 +7,7 @@
 .Card_Container {
   align-items: center;
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
   margin: 2px;
   width: 110px;
 }
@@ -17,3 +16,4 @@
   margin: 10px;
   width: 80px;
 }
+
