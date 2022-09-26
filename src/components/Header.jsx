@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useLocation, useHistory } from 'react-router-dom';
 import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
+// commit
 
-function Header(props) {
+function Header() {
+  const location = useLocation();
   const history = useHistory();
   const [showSearchBar, setSearchBar] = useState(false);
-  const { title } = props;
 
   function goToProfile() {
     history.push('/profile');
@@ -20,14 +20,33 @@ function Header(props) {
     return setSearchBar(true);
   }
 
+  const path = location.pathname;
+  let showTitle = '';
+
+  if (path === '/drinks') {
+    showTitle = 'Drinks';
+  }
+  if (path === '/meals') {
+    showTitle = 'Meals';
+  }
+
   if (
-    title === 'Favorite Recipes'
-    || title === 'Done Recipes'
-    || title === 'Profile'
+    path === '/favorite-recipes'
+    || path === '/done-recipes'
+    || path === '/profile'
   ) {
+    if (path === '/favorite-recipes') {
+      showTitle = 'Favorite Recipes';
+    }
+    if (path === '/done-recipes') {
+      showTitle = 'Done Recipes';
+    }
+    if (path === '/profile') {
+      showTitle = 'Profile';
+    }
     return (
       <header>
-        <h1 data-testid="page-title">{ title }</h1>
+        <h1 data-testid="page-title">{ showTitle }</h1>
         <button
           data-testid="profile-top-btn"
           type="button"
@@ -43,7 +62,7 @@ function Header(props) {
 
   return (
     <header>
-      <h1 data-testid="page-title">{ title }</h1>
+      <h1 data-testid="page-title">{ showTitle}</h1>
       <button
         data-testid="profile-top-btn"
         type="button"
@@ -71,14 +90,4 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {
-  title: PropTypes.string.isRequired,
-};
-
 export default Header;
-
-// Rota "/meals": possui o header com o título "Meals" e os ícones de perfil e pesquisa
-// Rota "/drinks": possui o header com o título "Drinks" e os ícones de perfil e pesquisa
-// Rota "/profile": possui o header com o título "Profile" e o ícone de perfil, mas sem o ícone de pesquisa
-// Rota "/done-recipes": possui o header com o título "Done Recipes" e o ícone de perfil, mas sem o ícone de pesquisa
-// Rota "/favorite-recipes": possui o header com o título "Favorite Recipes" e o ícone de perfil, mas sem o ícone de pesquisa

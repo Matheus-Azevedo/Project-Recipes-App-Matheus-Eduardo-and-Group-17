@@ -1,0 +1,10 @@
+.Card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Card_Container img {
+  margin: 10px;
+  width: 80px;
+}
