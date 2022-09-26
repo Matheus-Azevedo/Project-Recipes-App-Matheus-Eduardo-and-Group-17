@@ -25,6 +25,7 @@ import {
 
 function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category, dispatch }) {
   const [Recipes, setRecipes] = useState([]);
+  const [strCategory, setStrCategory] = useState();
 
   const [IconCategoryMeals] = useState([
     Beef,
@@ -49,11 +50,11 @@ function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category, disp
     }
   }, [DataCategoryDrinks, DataCategoryMeals, Category]);
 
-  const handleCategory = (strCategory) => {
+  const handleActivateFilter = (category) => {
     if (Category === '/drinks') {
-      dispatch(fetchRecipesByCategoryDrinks(strCategory));
+      dispatch(fetchRecipesByCategoryDrinks(category));
     } else {
-      dispatch(fetchRecipesByCategoryMeals(strCategory));
+      dispatch(fetchRecipesByCategoryMeals(category));
     }
   };
 
@@ -62,6 +63,16 @@ function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category, disp
       dispatch(fetchApiDrinks());
     } else {
       dispatch(fetchApiMeals());
+    }
+    setStrCategory();
+  };
+
+  const handleToggleCategory = async (category) => {
+    if (strCategory === category) {
+      handleCleanFilters();
+    } else {
+      setStrCategory(category);
+      handleActivateFilter(category);
     }
   };
 
@@ -84,7 +95,7 @@ function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category, disp
           key={ i }
           type="button"
           data-testid={ `${e.strCategory}-category-filter` }
-          onClick={ () => handleCategory(e.strCategory) }
+          onClick={ () => handleToggleCategory(e.strCategory) }
         >
           <img
             src={ Category === '/drinks' ? IconCategoryDrink[i] : IconCategoryMeals[i] }
