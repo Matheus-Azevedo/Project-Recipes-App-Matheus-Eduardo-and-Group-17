@@ -6,6 +6,7 @@ import { fetchApiDrinks, fetchApiMeals } from '../redux/actions/actionRecipeApi'
 import LoadingCard from '../components/LoadingCard';
 import CategoryButtons from '../components/CategoryButtons';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Recipes({ match, dispatch, Loading }) {
   useEffect(() => {
@@ -22,6 +23,7 @@ function Recipes({ match, dispatch, Loading }) {
       <Header />
       <CategoryButtons />
       <Card />
+      <Footer />
     </>
   );
 }
