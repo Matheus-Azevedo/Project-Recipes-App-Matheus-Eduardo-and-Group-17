@@ -9,7 +9,7 @@ import Chicken from '../Assets/chicken.svg';
 import Lamb from '../Assets/lamb.svg';
 import Dessert from '../Assets/dessert.svg';
 import AllMeals from '../Assets/AllMeals.svg';
-// Import Drinks Icons
+// Import Drink Icons
 import Drink from '../Assets/drink.svg';
 import Cocktail from '../Assets/cocktail.svg';
 import Shake from '../Assets/shake.svg';
