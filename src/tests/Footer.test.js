@@ -1,12 +1,12 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import RenderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
+import renderWithRouter from './renderWithRouter';
 import Footer from '../components/Footer';
 
 describe('Testando o componente Footer', () => {
   test('Testa se o clicar no botão "drinks" rediriciona para a pagina drinks', () => {
-    const { history } = RenderWithRouterAndRedux(<Footer />);
+    const { history } = renderWithRouter(<Footer />);
 
     const buttonDrinks = screen.getByTestId('drinks-bottom-btn');
 
@@ -18,7 +18,7 @@ describe('Testando o componente Footer', () => {
   });
 
   test('Testa se o clicar no botão "meals" rediriciona para a pagina meals', () => {
-    const { history } = RenderWithRouterAndRedux(<Footer />);
+    const { history } = renderWithRouter(<Footer />);
 
     const buttonMeals = screen.getByTestId('meals-bottom-btn');
 
