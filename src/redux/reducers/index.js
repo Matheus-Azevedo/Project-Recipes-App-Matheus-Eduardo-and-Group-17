@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import RecipesAPI from './RecipesAPI';
 
 const rootReducer = combineReducers({
-  example: () => ('example'),
+  RecipesAPI,
 });
 
 export default rootReducer;
