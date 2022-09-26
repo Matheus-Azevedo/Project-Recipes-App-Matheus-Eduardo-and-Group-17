@@ -1,0 +1,12 @@
+.CategoryButtonsContainer {
+  align-items: flex-start;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonCategory {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 3px;
+}

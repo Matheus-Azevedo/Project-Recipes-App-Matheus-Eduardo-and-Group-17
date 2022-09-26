@@ -15,6 +15,16 @@ export const mealsAPI = (data, categoryMeals) => ({
   categoryMeals,
 });
 
+export const recipesByCategoryDrinks = (data) => ({
+  type: 'RECIPES_BY_CATEGORY_DRINKS',
+  data,
+});
+
+export const recipesByCategoryMeals = (data) => ({
+  type: 'RECIPES_BY_CATEGORY_MEALS',
+  data,
+});
+
 export function fetchApiDrinks() {
   return async (dispatch) => { // thunk declarado
     const responseCategoryDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
@@ -38,5 +48,23 @@ export function fetchApiMeals() {
     const data = await response.json();
     const dataFilter12Array = data.meals.slice(NUMBER_0, NUMBER_12);
     return dispatch(mealsAPI(dataFilter12Array, dataFilter5Array));
+  };
+}
+
+export function fetchRecipesByCategoryDrinks(strCategory) {
+  return async (dispatch) => { // thunk declarado
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${strCategory}`);
+    const data = await response.json();
+    const dataFilter12Array = data.drinks.slice(NUMBER_0, NUMBER_12);
+    return dispatch(recipesByCategoryDrinks(dataFilter12Array));
+  };
+}
+
+export function fetchRecipesByCategoryMeals(strCategory) {
+  return async (dispatch) => { // thunk declarado
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${strCategory}`);
+    const data = await response.json();
+    const dataFilter12Array = data.meals.slice(NUMBER_0, NUMBER_12);
+    return dispatch(recipesByCategoryMeals(dataFilter12Array));
   };
 }

@@ -1,22 +1,95 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import Styles from './CategoryButtons.module.css';
+// Import Meals Icons
+import Beef from '../Assets/beef.svg';
+import Breakfast from '../Assets/breakfast.svg';
+import Chicken from '../Assets/chicken.svg';
+import Lamb from '../Assets/lamb.svg';
+import Dessert from '../Assets/dessert.svg';
+import AllMeals from '../Assets/AllMeals.svg';
+// Import Drinks Icons
+import Drink from '../Assets/drink.svg';
+import Cocktail from '../Assets/cocktail.svg';
+import Shake from '../Assets/shake.svg';
+import Other from '../Assets/other.svg';
+import Cocoa from '../Assets/cocoa.svg';
+import AllDrinks from '../Assets/AllDrinks.svg';
+// Import Actions
+import {
+  fetchRecipesByCategoryDrinks,
+  fetchRecipesByCategoryMeals,
+  fetchApiDrinks, fetchApiMeals,
+} from '../redux/actions/actionRecipeApi';
 
-function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category }) {
-  let category = DataCategoryMeals;
-  if (Category === '/drinks') {
-    category = DataCategoryDrinks;
-  }
+function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category, dispatch }) {
+  const [Recipes, setRecipes] = useState([]);
+
+  const [IconCategoryMeals] = useState([
+    Beef,
+    Breakfast,
+    Chicken,
+    Dessert,
+    Lamb]);
+
+  const [IconCategoryDrink] = useState([
+    Drink,
+    Cocktail,
+    Shake,
+    Other,
+    Cocoa,
+  ]);
+
+  useEffect(() => {
+    if (Category === '/drinks') {
+      setRecipes(DataCategoryDrinks);
+    } else {
+      setRecipes(DataCategoryMeals);
+    }
+  }, [DataCategoryDrinks, DataCategoryMeals, Category]);
+
+  const handleCategory = (strCategory) => {
+    if (Category === '/drinks') {
+      dispatch(fetchRecipesByCategoryDrinks(strCategory));
+    } else {
+      dispatch(fetchRecipesByCategoryMeals(strCategory));
+    }
+  };
+
+  const handleCleanFilters = () => {
+    if (Category === '/drinks') {
+      dispatch(fetchApiDrinks());
+    } else {
+      dispatch(fetchApiMeals());
+    }
+  };
 
   return (
-    <div>
-      {category.map((e, i) => (
+    <div className={ Styles.CategoryButtonsContainer }>
+      <button
+        className={ Styles.buttonCategory }
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => handleCleanFilters() }
+      >
+        <img
+          src={ Category === '/drinks' ? AllDrinks : AllMeals }
+          alt="Icone Beef"
+        />
+      </button>
+      {Recipes.map((e, i) => (
         <button
+          className={ Styles.buttonCategory }
           key={ i }
           type="button"
           data-testid={ `${e.strCategory}-category-filter` }
+          onClick={ () => handleCategory(e.strCategory) }
         >
-          {e.strCategory}
-
+          <img
+            src={ Category === '/drinks' ? IconCategoryDrink[i] : IconCategoryMeals[i] }
+            alt="Icone Beef"
+          />
         </button>
       ))}
     </div>
@@ -32,6 +105,7 @@ CategoryButtons.propTypes = {
   DataCategoryDrinks: PropTypes.arrayOf(PropTypes.objectOf),
   DataCategoryMeals: PropTypes.arrayOf(PropTypes.objectOf),
   Category: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
