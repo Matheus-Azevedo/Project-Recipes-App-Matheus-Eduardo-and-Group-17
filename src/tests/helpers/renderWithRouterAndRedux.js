@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../redux/reducers/index';
+// commit
 
 const renderWithRouterAndRedux = (component, initialState, route = '/') => {
   const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
