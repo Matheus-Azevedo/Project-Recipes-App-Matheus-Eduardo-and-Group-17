@@ -1,16 +1,22 @@
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Styles from './Card.module.css';
 
 function Card({ RecipesMeals, RecipesDrinks, Category }) {
-  let recipes = RecipesMeals;
-
-  if (Category === '/drinks') recipes = RecipesDrinks;
+  const [Recipes, setRecipes] = useState([]);
+  useEffect(() => {
+    if (Category === '/drinks') {
+      setRecipes(RecipesDrinks);
+    } else {
+      setRecipes(RecipesMeals);
+    }
+  }, [RecipesMeals, RecipesDrinks, Category]);
 
   return (
     <div className={ Styles.Card }>
       {
-        recipes.map((e, i) => (
+        Recipes.map((e, i) => (
           <div
             className={ Styles.Card_Container }
             key={ i }

@@ -7,8 +7,12 @@ import './App.css';
 import Login from './pages/Login';
 import Recipes from './pages/Recipes';
 
+import './App.css';
+// import rockGlass from './images/rockGlass.svg';
+
 function App() {
   return (
+
     <Switch>
       <Route exact path="/" component={ Login } />
       <Route exact path="/meals" component={ Recipes } />

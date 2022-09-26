@@ -24,6 +24,16 @@ function RecipesAPI(state = INITIAL_STATE, action) {
       Category: '/drinks',
       LoadingAPI: false,
     };
+  case 'RECIPES_BY_CATEGORY_DRINKS':
+    return {
+      ...state,
+      DataRecipesDrinks: action.data,
+    };
+  case 'RECIPES_BY_CATEGORY_MEALS':
+    return {
+      ...state,
+      DataRecipesMeals: action.data,
+    };
   default:
     return state;
   }

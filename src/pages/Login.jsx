@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-/* import { useHistory } from 'react-router-dom'; */
+import { useHistory } from 'react-router-dom';
 
 const NUMBER_SEVEN = 7;
 
@@ -41,12 +41,12 @@ function Login() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginInfo.password]);
 
-  /*   const history = useHistory(); */
+  const history = useHistory();
   const handleClick = async () => {
     localStorage.setItem('user', JSON.stringify({ email: loginInfo.email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('drinksToken', 1);
-    /*     history.push(); */
+    history.push('/meals');
   };
 
   const checkDisable = loginInfo.validationButton === true;
