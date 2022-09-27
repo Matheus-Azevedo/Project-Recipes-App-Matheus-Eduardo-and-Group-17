@@ -4,9 +4,13 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Profile() {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState({ email: '' });
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('user')));
+    const local = JSON.parse(localStorage.getItem('user'));
+    if (local === null) {
+      return;
+    }
+    setUser(local);
   }, []);
   const { email } = user;
   const history = useHistory();
