@@ -14,6 +14,12 @@ function Profile() {
   }, []);
   const { email } = user;
   const history = useHistory();
+
+  const handleLogout = () => {
+    localStorage.setItem('user', '');
+    history.push('/');
+  };
+
   return (
     <div>
       <Header />
@@ -26,8 +32,20 @@ function Profile() {
         >
           Done Recipes
         </button>
-        <button type="button" data-testid="profile-favorite-btn">Favorite Recipes</button>
-        <button type="button" data-testid="profile-logout-btn">Logout</button>
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+          onClick={ () => history.push('/favorite-recipes') }
+        >
+          Favorite Recipes
+        </button>
+        <button
+          type="button"
+          data-testid="profile-logout-btn"
+          onClick={ handleLogout }
+        >
+          Logout
+        </button>
       </section>
       <Footer />
     </div>
