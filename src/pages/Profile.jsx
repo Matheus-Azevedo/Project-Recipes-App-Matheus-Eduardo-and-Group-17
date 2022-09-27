@@ -16,7 +16,12 @@ function Profile() {
   const history = useHistory();
 
   const handleLogout = () => {
-    localStorage.setItem('user', '');
+    localStorage.removeItem('user');
+    localStorage.removeItem('mealsToken');
+    localStorage.removeItem('drinksToken');
+    localStorage.removeItem('doneRecipes');
+    localStorage.removeItem('favoriteRecipes');
+    localStorage.removeItem('inProgressRecipes');
     history.push('/');
   };
 
