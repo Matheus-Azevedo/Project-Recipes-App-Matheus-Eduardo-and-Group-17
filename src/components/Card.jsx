@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import Styles from './Card.module.css';
+
+import styles from '../styles/components/Card.module.css';
 
 function Card({ RecipesMeals, RecipesDrinks, Category }) {
   const [Recipes, setRecipes] = useState([]);
@@ -14,11 +15,11 @@ function Card({ RecipesMeals, RecipesDrinks, Category }) {
   }, [RecipesMeals, RecipesDrinks, Category]);
 
   return (
-    <div className={ Styles.Card }>
+    <div className={ styles.Card }>
       {
         Recipes.map((e, i) => (
           <div
-            className={ Styles.Card_Container }
+            className={ styles.Card_Container }
             key={ i }
             data-testid={ `${i}-recipe-card` }
           >

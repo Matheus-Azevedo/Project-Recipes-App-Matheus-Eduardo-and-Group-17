@@ -1,8 +1,8 @@
-import Styles from './LoadingCard.module.css';
+import styles from '../styles/components/LoadingCard.module.css';
 
 function LoadingCard() {
   return (
-    <div className={ Styles.LoadingContainer }>
+    <div className={ styles.LoadingContainer }>
       <p>Loading...</p>
     </div>
   );

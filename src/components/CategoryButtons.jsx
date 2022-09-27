@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Styles from './CategoryButtons.module.css';
+
+import styles from '../styles/components/CategoryButtons.module.css';
 // Import Meals Icons
 import Beef from '../Assets/beef.svg';
 import Breakfast from '../Assets/breakfast.svg';
@@ -77,9 +78,9 @@ function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category, disp
   };
 
   return (
-    <div className={ Styles.CategoryButtonsContainer }>
+    <div className={ styles.CategoryButtonsContainer }>
       <button
-        className={ Styles.buttonCategory }
+        className={ styles.buttonCategory }
         type="button"
         data-testid="All-category-filter"
         onClick={ () => handleCleanFilters() }
@@ -91,7 +92,7 @@ function CategoryButtons({ DataCategoryDrinks, DataCategoryMeals, Category, disp
       </button>
       {Recipes.map((e, i) => (
         <button
-          className={ Styles.buttonCategory }
+          className={ styles.buttonCategory }
           key={ i }
           type="button"
           data-testid={ `${e.strCategory}-category-filter` }
