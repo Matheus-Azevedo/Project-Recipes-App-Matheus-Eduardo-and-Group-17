@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Styles from './Card.module.css';
 
@@ -13,14 +14,28 @@ function Card({ RecipesMeals, RecipesDrinks, Category }) {
     }
   }, [RecipesMeals, RecipesDrinks, Category]);
 
+  const history = useHistory();
+
+  const handleRedirect = (id) => {
+    if (Category === '/drinks') {
+      history.push(`/drinks/${id}`);
+    } else {
+      history.push(`/meals/${id}`);
+    }
+  };
+
   return (
     <div className={ Styles.Card }>
       {
         Recipes.map((e, i) => (
-          <div
+          <button
             className={ Styles.Card_Container }
             key={ i }
             data-testid={ `${i}-recipe-card` }
+            type="button"
+            name="recipes"
+            onClick={ () => handleRedirect(Category === '/drinks'
+              ? e.idDrink : e.idMeal) }
           >
             <img
               data-testid={ `${i}-card-img` }
@@ -33,7 +48,7 @@ function Card({ RecipesMeals, RecipesDrinks, Category }) {
               {Category === '/drinks' ? e.strDrink : e.strMeal}
 
             </p>
-          </div>
+          </button>
         ))
       }
     </div>
@@ -49,6 +64,9 @@ Card.propTypes = {
   RecipesMeals: PropTypes.arrayOf(PropTypes.objectOf),
   RecipesDrinks: PropTypes.arrayOf(PropTypes.objectOf),
   Category: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
