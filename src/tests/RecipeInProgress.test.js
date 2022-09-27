@@ -7,7 +7,6 @@ import MockMeals from '../../cypress/mocks/meals';
 import renderWithRouter from './renderWithRouter';
 
 const inputDataTestId = 'recipe-title';
-/* const beefCategoryButtonTestId = 'Side-category-filter'; */
 
 test('testa se é renderizado bebidas quando a rota é /drinks', async () => {
   jest.spyOn(global, 'fetch');
