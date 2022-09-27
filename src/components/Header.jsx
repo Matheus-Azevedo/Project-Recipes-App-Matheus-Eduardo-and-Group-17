@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 // commit
 
 function Header() {
@@ -82,9 +83,7 @@ function Header() {
         Search
       </button>
       { showSearchBar && (
-        <label htmlFor="search-input">
-          <input data-testid="search-input" type="text" />
-        </label>
+        <SearchBar />
       ) }
     </header>
   );
