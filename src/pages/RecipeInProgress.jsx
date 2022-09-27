@@ -1,56 +1,31 @@
-import React from 'react';
-
-const arrayMock = [
-  {
-    id: '52771',
-    title: 'Spicy Arrabiata Penne',
-    tags: 'Pasta,Curry',
-    categories: 'Vegetarian',
-    thumbnail: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    instructions: 'Bring a large pot of water',
-    video: 'https://www.youtube.com/watch?v=1IszT_guI08',
-    ingredients: [
-      {
-        ingredient: 'penne rigate',
-        measure: '1 pound',
-      },
-      {
-        ingredient: 'pesdfdsfe',
-        measure: '2 poasfdasfund',
-      },
-      {
-        ingredient: 'pesdfdsfe',
-        measure: '2 poasfdasfund',
-      },
-      {
-        ingredient: 'pesdfdsfe',
-        measure: '2 poasfdasfund',
-      },
-      {
-        ingredient: 'pesdfdsfe',
-        measure: '2 poasfdasfund',
-      },
-      {
-        ingredient: 'pesdfdsfe',
-        measure: '2 poasfdasfund',
-      },
-      {
-        ingredient: 'pesdfdsfe',
-        measure: '2 poasfdasfund',
-      },
-      {
-        ingredient: 'pesdfdsfe',
-        measure: '2 poasfdasfund',
-      },
-    ],
-  },
-];
+import React, { useEffect, useState } from 'react';
+import { useLocation, useRouteMatch } from 'react-router-dom';
+import LoadingCard from '../components/LoadingCard';
+import { getDrinkById, getMealById } from '../services/recipes';
 
 function RecipeInProgress() {
-  const { title, categories, thumbnail, instructions, ingredients } = arrayMock[0];
+  const [recipe, setRecipe] = useState(null);
+
+  const { pathname } = useLocation();
+  const { params } = useRouteMatch();
+  const { id } = params;
+
+  const isMeal = /^\/meals\/.*/i.test(pathname);
+  const isDrink = /^\/drinks\/.*/i.test(pathname);
+
+  useEffect(() => {
+    if (isDrink) getDrinkById(id).then(setRecipe);
+    else if (isMeal) getMealById(id).then(setRecipe);
+  }, [id, isDrink, isMeal]);
+
+  if (!recipe) return <LoadingCard />;
+
+  const { title, categories, thumbnailUrl, instructions, ingredients } = recipe;
   return (
     <div>
-      <img src={ thumbnail } alt="" data-testid="recipe-photo" />
+      <pre>{JSON.stringify(recipe, null, 2)}</pre>
+
+      <img src={ thumbnailUrl } alt="" data-testid="recipe-photo" />
       <h1 data-testid="recipe-title">{title}</h1>
       <h3 data-testid="recipe-category">{categories}</h3>
       <button type="button" data-testid="share-btn">Compartilhar</button>
