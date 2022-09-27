@@ -21,7 +21,6 @@ function Profile() {
           onClick={ () => history.push('/done-recipes') }
         >
           Done Recipes
-
         </button>
         <button type="button" data-testid="profile-favorite-btn">Favorite Recipes</button>
         <button type="button" data-testid="profile-logout-btn">Logout</button>
