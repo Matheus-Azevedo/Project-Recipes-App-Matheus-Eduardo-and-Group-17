@@ -6,11 +6,11 @@ import Footer from '../components/Footer';
 function Profile() {
   const [user, setUser] = useState({ email: '' });
   useEffect(() => {
-    const local = JSON.parse(localStorage.getItem('user'));
-    if (local === null) {
+    const storage = JSON.parse(localStorage.getItem('user'));
+    if (storage === null) {
       return;
     }
-    setUser(local);
+    setUser(storage);
   }, []);
   const { email } = user;
   const history = useHistory();
