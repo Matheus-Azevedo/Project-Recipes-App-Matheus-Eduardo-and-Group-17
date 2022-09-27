@@ -32,6 +32,9 @@ Recipes.propTypes = {
   match: PropTypes.shape().isRequired,
   dispatch: PropTypes.func.isRequired,
   Loading: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
