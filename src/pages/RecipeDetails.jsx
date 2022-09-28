@@ -3,10 +3,11 @@ import { FiHome } from 'react-icons/fi';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingCard from '../components/LoadingCard';
-import { getDrinkById, getMealById } from '../services/recipes';
+import { getDrinkById, getDrinks, getMealById, getMeals } from '../services/recipes';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState(null);
+  const [, setSuggestionsRecipes] = useState([]);
 
   const { pathname } = useLocation();
   const { params } = useRouteMatch();
@@ -16,20 +17,24 @@ function RecipeDetails() {
   const isDrink = /^\/drinks\/.*/i.test(pathname);
 
   useEffect(() => {
-    if (isDrink) getDrinkById(id).then(setRecipe);
-    else if (isMeal) getMealById(id).then(setRecipe);
+    if (isDrink) {
+      getDrinkById(id).then(setRecipe);
+      getMeals().then(setSuggestionsRecipes);
+    } else if (isMeal) {
+      getMealById(id).then(setRecipe);
+      getDrinks().then(setSuggestionsRecipes);
+    }
   }, [id, isDrink, isMeal]);
 
   if (!recipe) return <LoadingCard />;
 
   return (
     <div>
-      <pre>{JSON.stringify(recipe, null, 2)}</pre>
-
       <div>
         <img
           src={ recipe.thumbnailUrl }
           alt={ recipe.title }
+          style={ { width: '100%' } }
           data-testid="recipe-photo"
         />
 
@@ -51,10 +56,7 @@ function RecipeDetails() {
 
       <ol>
         {recipe.ingredients.map(({ ingredient, measure }, index) => (
-          <li
-            key={ ingredient }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
+          <li key={ ingredient } data-testid={ `${index}-ingredient-name-and-measure` }>
             <span>{ingredient}</span>
             <span>{measure}</span>
           </li>
@@ -65,7 +67,7 @@ function RecipeDetails() {
 
       {recipe.videoUrl && (
         <iframe
-          width="560"
+          width="100%"
           height="315"
           src={ `https://www.youtube.com/embed/${recipe.videoCode}` }
           title="YouTube video player"
