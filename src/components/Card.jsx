@@ -2,10 +2,17 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import Styles from './Card.module.css';
 
-function Card({ RecipesMeals, RecipesDrinks, Category,
-  MealsFiltered, DrinksFiltered, Search }) {
+function Card({
+  RecipesMeals,
+  RecipesDrinks,
+  Category,
+  MealsFiltered,
+  DrinksFiltered,
+  Search,
+}) {
   const [Recipes, setRecipes] = useState([]);
   const history = useHistory();
 
@@ -50,30 +57,25 @@ function Card({ RecipesMeals, RecipesDrinks, Category,
 
   return (
     <div className={ Styles.Card }>
-      {
-        Recipes.map((e, i) => (
-          <button
-            className={ Styles.Card_Container }
-            key={ i }
-            data-testid={ `${i}-recipe-card` }
-            type="button"
-            name="recipes"
-            onClick={ () => handleRedirect(Category === '/drinks'
-              ? e.idDrink : e.idMeal) }
-          >
-            <img
-              data-testid={ `${i}-card-img` }
-              src={ Category === '/drinks' ? e.strDrinkThumb : e.strMealThumb }
-              alt="imagens receitas"
-            />
-            <p
-              data-testid={ `${i}-card-name` }
-            >
-              {Category === '/drinks' ? e.strDrink : e.strMeal}
-            </p>
-          </button>
-        ))
-      }
+      {Recipes.map((e, i) => (
+        <button
+          className={ Styles.Card_Container }
+          key={ i }
+          data-testid={ `${i}-recipe-card` }
+          type="button"
+          name="recipes"
+          onClick={ () => handleRedirect(Category === '/drinks' ? e.idDrink : e.idMeal) }
+        >
+          <img
+            data-testid={ `${i}-card-img` }
+            src={ Category === '/drinks' ? e.strDrinkThumb : e.strMealThumb }
+            alt="imagens receitas"
+          />
+          <p data-testid={ `${i}-card-name` }>
+            {Category === '/drinks' ? e.strDrink : e.strMeal}
+          </p>
+        </button>
+      ))}
     </div>
   );
 }
@@ -92,9 +94,6 @@ Card.propTypes = {
   DrinksFiltered: PropTypes.arrayOf(PropTypes.objectOf),
   Category: PropTypes.string.isRequired,
   Search: PropTypes.bool.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({

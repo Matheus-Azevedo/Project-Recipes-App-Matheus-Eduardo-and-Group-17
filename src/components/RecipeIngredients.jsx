@@ -6,7 +6,10 @@ function RecipeIngredients({ ingredients }) {
   return (
     <ol>
       {ingredients.map(({ ingredient, measure }, index) => (
-        <li key={ ingredient } data-testid={ `${index}-ingredient-name-and-measure` }>
+        <li
+          key={ `${ingredient}-${measure}` }
+          data-testid={ `${index}-ingredient-name-and-measure` }
+        >
           <span>{ingredient}</span>
           <span>{measure}</span>
         </li>

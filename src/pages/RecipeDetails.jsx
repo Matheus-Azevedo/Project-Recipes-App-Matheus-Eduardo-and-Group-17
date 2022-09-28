@@ -1,5 +1,6 @@
+import copy from 'clipboard-copy';
 import React, { useEffect, useState, useMemo } from 'react';
-import { FiHome } from 'react-icons/fi';
+import { FiHeart, FiHome, FiShare } from 'react-icons/fi';
 import { Link, NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 
 import styles from '../styles/pages/RecipeDetails.module.css';
@@ -11,10 +12,13 @@ import { getDrinkById, getDrinks, getMealById, getMeals } from '../services/reci
 import { getInProgressRecipeById } from '../services/storage';
 
 const RECOMMENDATIONS_LENGTH = 6;
+const ONE_SECOND = 1_000;
+let messageClearTimeoutId;
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
+  const [message, setMessage] = useState('');
 
   const { pathname } = useLocation();
   const { params } = useRouteMatch();
@@ -39,11 +43,27 @@ function RecipeDetails() {
     }
   }, [id, isDrink, isMeal]);
 
+  useEffect(() => () => {
+    clearTimeout(messageClearTimeoutId);
+  }, []);
+
+  function handleShareRecipe() {
+    copy(window.location.href);
+    setMessage('Link copied!');
+
+    if (messageClearTimeoutId) clearTimeout(messageClearTimeoutId);
+
+    messageClearTimeoutId = setTimeout(() => {
+      setMessage('');
+    }, ONE_SECOND);
+  }
+
   if (!recipe) return <LoadingCard />;
 
   return (
     <div>
       <div>
+        {message && <span>{message}</span>}
         <img
           src={ recipe.thumbnailUrl }
           alt={ recipe.title }
@@ -54,6 +74,13 @@ function RecipeDetails() {
         <Link to="/">
           <FiHome />
         </Link>
+
+        <button type="button" onClick={ handleShareRecipe } data-testid="share-btn">
+          <FiShare />
+        </button>
+        <button type="button" onClick={ () => {} } data-testid="favorite-btn">
+          <FiHeart />
+        </button>
       </div>
 
       <h1 data-testid="recipe-title">{recipe.title}</h1>
