@@ -14,12 +14,23 @@ describe('Testando tela de Profile', () => {
     expect(history.location.pathname).toBe('/done-recipes');
   });
 
-  test('testando se o input do email aparece', () => {
+  test('testando se ao clicar no botão favorite recipes a rota muda', () => {
     const { history } = renderWithRouter((<App />));
     act(() => {
       history.push('/profile');
     });
-    const inputDoneTestes = screen.getByTestId('profile-email');
-    expect(inputDoneTestes).toBeInTheDocument();
+    const inputDoneFavorite = screen.getByTestId('profile-favorite-btn');
+    userEvent.click(inputDoneFavorite);
+    expect(history.location.pathname).toBe('/favorite-recipes');
+  });
+
+  test('testando se ao clicar no botão Logout a rota muda para /', () => {
+    const { history } = renderWithRouter((<App />));
+    act(() => {
+      history.push('/profile');
+    });
+    const inputDoneLogout = screen.getByTestId('profile-logout-btn');
+    userEvent.click(inputDoneLogout);
+    expect(history.location.pathname).toBe('/');
   });
 });

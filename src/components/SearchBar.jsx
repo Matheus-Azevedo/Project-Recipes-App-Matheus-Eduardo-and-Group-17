@@ -8,8 +8,6 @@ function SearchBar({ dispatch }) {
   const location = useLocation();
   const [filter, setFilter] = useState('');
   const [searchFilter, setSearchFilter] = useState('');
-  console.log(filter);
-  console.log(searchFilter);
 
   function submitTheSearch() {
     if (location.pathname === '/meals') {
@@ -30,27 +28,33 @@ function SearchBar({ dispatch }) {
     <fieldset>
       <label htmlFor="ingredient-search-radio">
         <input
+          id="ingredient-search-radio"
           data-testid="ingredient-search-radio"
           type="radio"
           name="search-radio"
+          value={ filter }
           onClick={ () => setFilter('filter.php?i=') }
         />
         Ingrediente
       </label>
       <label htmlFor="name-search-radio">
         <input
+          id="name-search-radio"
           data-testid="name-search-radio"
           type="radio"
           name="search-radio"
+          value={ filter }
           onClick={ () => setFilter('search.php?s=') }
         />
         Nome
       </label>
       <label htmlFor="first-letter-search-radio">
         <input
+          id="first-letter-search-radio"
           data-testid="first-letter-search-radio"
           type="radio"
           name="search-radio"
+          value={ filter }
           onClick={ () => setFilter('search.php?f=') }
         />
         Primeira Letra
@@ -79,8 +83,3 @@ SearchBar.propTypes = {
 };
 
 export default connect()(SearchBar);
-
-// https://www.themealdb.com/api/json/v1/1/filter.php?i={ingrediente};
-// https://www.themealdb.com/api/json/v1/1/search.php?s={nome};
-// https://www.thecocktaildb.com/api/json/v1/1/search.php?s=
-// https://www.themealdb.com/api/json/v1/1/search.php?f={primeira-letra};
