@@ -56,7 +56,13 @@ function FavoriteRecipes() {
             data-testid={ `${index}-horizontal-image` }
             style={ { width: 150, height: 150 } }
           />
-          {recipe.alcoholicOrNot === 'Alcoholic' ? (
+          <p
+            data-testid={ `${index}-horizontal-name` }
+            id={ recipe.id }
+          >
+            {recipe.name}
+          </p>
+          {recipe.alcoholicOrNot && (
             <p data-testid={ `${index}-horizontal-top-text` }>
               {recipe.alcoholicOrNot}
               {' '}
@@ -64,7 +70,8 @@ function FavoriteRecipes() {
               {' '}
               {recipe.category}
             </p>
-          ) : (
+          )}
+          {recipe.area && (
             <p data-testid={ `${index}-horizontal-top-text` }>
               {recipe.area}
               {' '}
@@ -72,17 +79,37 @@ function FavoriteRecipes() {
               {' '}
               {recipe.category}
             </p>
-          ) }
+          )}
+          {recipe.nationality && (
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              {recipe.nationality}
+              {' '}
+              -
+              {' '}
+              {recipe.category}
+            </p>
+          )}
           <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-          <button type="button" data-testid={ `${index}-horizontal-favorite-btn` }>
-            <img src={ blackHeartIcon } alt="Icone de Favorito" />
+          <button
+            type="button"
+            data-testid={ `${index}-horizontal-favorite-btn` }
+            src={ blackHeartIcon }
+          >
+            <img
+              src={ blackHeartIcon }
+              alt="Icone de Favorito"
+            />
           </button>
           <button
             type="button"
             data-testid={ `${index}-horizontal-share-btn` }
             onClick={ () => (copyLinkToShare(recipe.id, recipe.type)) }
+            src={ shareIcon }
           >
-            <img src={ shareIcon } alt="Icone para Compartilhar link" />
+            <img
+              src={ shareIcon }
+              alt="Icone para Compartilhar link"
+            />
           </button>
         </div>
       ))}
