@@ -5,9 +5,11 @@ import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import LoadingCard from '../components/LoadingCard';
 import { getDrinkById, getDrinks, getMealById, getMeals } from '../services/recipes';
 
+const RECOMMENDATIONS_LENGTH = 6;
+
 function RecipeDetails() {
   const [recipe, setRecipe] = useState(null);
-  const [, setSuggestionsRecipes] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
 
   const { pathname } = useLocation();
   const { params } = useRouteMatch();
@@ -17,12 +19,16 @@ function RecipeDetails() {
   const isDrink = /^\/drinks\/.*/i.test(pathname);
 
   useEffect(() => {
+    function sliceArray(array, length = RECOMMENDATIONS_LENGTH) {
+      return array.slice(0, length);
+    }
+
     if (isDrink) {
       getDrinkById(id).then(setRecipe);
-      getMeals().then(setSuggestionsRecipes);
+      getMeals().then((recipes) => setRecommendations(sliceArray(recipes)));
     } else if (isMeal) {
       getMealById(id).then(setRecipe);
-      getDrinks().then(setSuggestionsRecipes);
+      getDrinks().then((recipes) => setRecommendations(sliceArray(recipes)));
     }
   }, [id, isDrink, isMeal]);
 
@@ -84,6 +90,21 @@ function RecipeDetails() {
           allowFullScreen
         />
       )}
+
+      <ul style={ { display: 'flex', maxWidth: '100vw', overflowX: 'auto' } }>
+        {recommendations.map((recommendation, index) => (
+          <li
+            key={ recommendation.id }
+            style={ { maxWidth: 180 } }
+            data-testid={ `${index}-recommendation-card` }
+          >
+            <img src={ recommendation.thumbnailUrl } alt={ recommendation.title } />
+            <span data-testid={ `${index}-recommendation-title` }>
+              {recommendation.title}
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
