@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { FiHome } from 'react-icons/fi';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 
+import styles from '../styles/pages/RecipeDetails.module.css';
 import LoadingCard from '../components/LoadingCard';
+import Recommendations from '../components/Recommendations';
+import RecipeVideo from '../components/RecipeVideo';
+import RecipeIngredients from '../components/RecipeIngredients';
 import { getDrinkById, getDrinks, getMealById, getMeals } from '../services/recipes';
 
 const RECOMMENDATIONS_LENGTH = 6;
@@ -60,51 +64,13 @@ function RecipeDetails() {
         )}
       </p>
 
-      <ol>
-        {recipe.ingredients.map(({ ingredient, measure }, index) => (
-          <li key={ ingredient } data-testid={ `${index}-ingredient-name-and-measure` }>
-            <span>{ingredient}</span>
-            <span>{measure}</span>
-          </li>
-        ))}
-      </ol>
+      <RecipeIngredients ingredients={ recipe.ingredients } />
 
       <p data-testid="instructions">{recipe.instructions}</p>
 
-      {recipe.videoUrl && (
-        <iframe
-          width="100%"
-          height="315"
-          src={ `https://www.youtube.com/embed/${recipe.videoCode}` }
-          title="YouTube video player"
-          frameBorder="0"
-          allow="
-            accelerometer;
-            autoplay;
-            clipboard-write;
-            encrypted-media;
-            gyroscope;
-            picture-in-picture
-          "
-          data-testid="video"
-          allowFullScreen
-        />
-      )}
+      {recipe.videoUrl && <RecipeVideo videoCode={ recipe.videoCode } />}
 
-      <ul style={ { display: 'flex', maxWidth: '100vw', overflowX: 'auto' } }>
-        {recommendations.map((recommendation, index) => (
-          <li
-            key={ recommendation.id }
-            style={ { maxWidth: 180 } }
-            data-testid={ `${index}-recommendation-card` }
-          >
-            <img src={ recommendation.thumbnailUrl } alt={ recommendation.title } />
-            <span data-testid={ `${index}-recommendation-title` }>
-              {recommendation.title}
-            </span>
-          </li>
-        ))}
-      </ul>
+      <Recommendations recommendations={ recommendations } />
     </div>
   );
 }
