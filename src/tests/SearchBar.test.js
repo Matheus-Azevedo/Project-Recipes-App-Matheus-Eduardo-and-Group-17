@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import App from '../App';
 import mockFetch from '../../cypress/mocks/meals';
+import mockFetch2 from '../../cypress/mocks/drinks';
 
 const searchTopBtnID = 'search-top-btn';
 const searchInputID = 'search-input';
@@ -41,6 +42,20 @@ describe('Testando o componente SearchBar', () => {
     userEvent.click(screen.getByTestId(dataTestIdBtns[0]));
     userEvent.type(screen.getByTestId(searchInputID), 'chicken');
     expect(screen.getByTestId(searchInputID)).toHaveValue('chicken');
+    userEvent.click(screen.getByTestId('exec-search-btn'));
+  });
+  test('Verifica se é possível buscar um ingrediente vodka', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockFetch2),
+    });
+    renderWithRouter(<App />, {}, '/drinks');
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
+    });
+    userEvent.click(screen.getByTestId(searchTopBtnID));
+    userEvent.click(screen.getByTestId(dataTestIdBtns[0]));
+    userEvent.type(screen.getByTestId(searchInputID), 'vodka');
+    expect(screen.getByTestId(searchInputID)).toHaveValue('vodka');
     userEvent.click(screen.getByTestId('exec-search-btn'));
   });
   test('Verifica se é disparado um alert', async () => {
