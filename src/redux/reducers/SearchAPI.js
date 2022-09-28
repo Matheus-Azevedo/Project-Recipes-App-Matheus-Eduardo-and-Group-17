@@ -1,23 +1,26 @@
-import { DRINKS_API, MEALS_API } from '../actions/actionSearchApi';
+import { DRINKS_API_FILTERED, MEALS_API_FILTERED } from '../actions/actionSearchApi';
 
 const INITIAL_STATE = {
-  DataRecipesMeals: [],
-  DataRecipesDrinks: [],
+  DataRecipesMealsFiltered: [],
+  DataRecipesDrinksFiltered: [],
   LoadingAPI: true,
+  Search: false,
 };
 
 function RecipesAPI(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case MEALS_API:
+  case MEALS_API_FILTERED:
     return {
       ...state,
-      DataRecipesMeals: action.data,
+      DataRecipesMealsFiltered: action.data,
+      Search: true,
       LoadingAPI: false,
     };
-  case DRINKS_API:
+  case DRINKS_API_FILTERED:
     return {
       ...state,
-      DataRecipesDrinks: action.data,
+      DataRecipesDrinksFiltered: action.data,
+      Search: true,
       LoadingAPI: false,
     };
   default:
