@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FiHome } from 'react-icons/fi';
-import { Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { Link, NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 
 import styles from '../styles/pages/RecipeDetails.module.css';
 import LoadingCard from '../components/LoadingCard';
@@ -71,6 +71,14 @@ function RecipeDetails() {
       {recipe.videoUrl && <RecipeVideo videoCode={ recipe.videoCode } />}
 
       <Recommendations recommendations={ recommendations } />
+
+      <NavLink
+        to="#test"
+        className={ styles.startRecipeButton }
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+      </NavLink>
     </div>
   );
 }
