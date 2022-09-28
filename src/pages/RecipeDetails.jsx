@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { FiHome } from 'react-icons/fi';
 import { Link, NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import Recommendations from '../components/Recommendations';
 import RecipeVideo from '../components/RecipeVideo';
 import RecipeIngredients from '../components/RecipeIngredients';
 import { getDrinkById, getDrinks, getMealById, getMeals } from '../services/recipes';
+import { getInProgressRecipeById } from '../services/storage';
 
 const RECOMMENDATIONS_LENGTH = 6;
 
@@ -21,6 +22,8 @@ function RecipeDetails() {
 
   const isMeal = /^\/meals\/.*/i.test(pathname);
   const isDrink = /^\/drinks\/.*/i.test(pathname);
+
+  const isInProgress = useMemo(() => !!getInProgressRecipeById(id), [id]);
 
   useEffect(() => {
     function sliceArray(array, length = RECOMMENDATIONS_LENGTH) {
@@ -73,11 +76,11 @@ function RecipeDetails() {
       <Recommendations recommendations={ recommendations } />
 
       <NavLink
-        to="#test"
+        to={ `${pathname}/in-progress` }
         className={ styles.startRecipeButton }
         data-testid="start-recipe-btn"
       >
-        Start Recipe
+        {isInProgress ? 'Continue Recipe' : 'Start Recipe'}
       </NavLink>
     </div>
   );
