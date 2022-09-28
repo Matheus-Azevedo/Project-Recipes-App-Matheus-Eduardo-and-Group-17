@@ -24,15 +24,6 @@ describe('Testando tela de Profile', () => {
     expect(history.location.pathname).toBe('/favorite-recipes');
   });
 
-  test('testando se o input do email aparece', () => {
-    const { history } = renderWithRouter((<App />));
-    act(() => {
-      history.push('/profile');
-    });
-    const inputDoneTestes = screen.getByTestId('profile-email');
-    expect(inputDoneTestes).toBeInTheDocument();
-  });
-
   test('testando se ao clicar no botão Logout a rota muda para /', () => {
     const { history } = renderWithRouter((<App />));
     act(() => {
