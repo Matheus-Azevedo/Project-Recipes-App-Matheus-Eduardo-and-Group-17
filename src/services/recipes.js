@@ -8,7 +8,7 @@ async function getDrinkById(id) {
 
   return fetch(url)
     .then((response) => response.json())
-    .then((data) => (data.drinks ? mapToRecipe(data.drinks[0], 'drinks') : null));
+    .then((data) => (data.drinks ? mapToRecipe(data.drinks[0], 'drink') : null));
 }
 
 async function getMealById(id) {
@@ -24,7 +24,7 @@ async function getDrinks(searchTerm = '') {
 
   return fetch(url)
     .then((response) => response.json())
-    .then((data) => (data.drinks ? mapToRecipes(data.drinks, 'drinks') : null));
+    .then((data) => (data.drinks ? mapToRecipes(data.drinks, 'drink') : null));
 }
 
 async function getMeals(searchTerm = '') {

@@ -9,7 +9,7 @@ import Recommendations from '../components/Recommendations';
 import RecipeVideo from '../components/RecipeVideo';
 import RecipeIngredients from '../components/RecipeIngredients';
 import { getDrinkById, getDrinks, getMealById, getMeals } from '../services/recipes';
-import { getInProgressRecipeById } from '../services/storage';
+import { addFavoriteRecipe, getInProgressRecipeById } from '../services/storage';
 
 const RECOMMENDATIONS_LENGTH = 6;
 const ONE_SECOND = 1_000;
@@ -43,9 +43,12 @@ function RecipeDetails() {
     }
   }, [id, isDrink, isMeal]);
 
-  useEffect(() => () => {
-    clearTimeout(messageClearTimeoutId);
-  }, []);
+  useEffect(
+    () => () => {
+      clearTimeout(messageClearTimeoutId);
+    },
+    [],
+  );
 
   function handleShareRecipe() {
     copy(window.location.href);
@@ -56,6 +59,10 @@ function RecipeDetails() {
     messageClearTimeoutId = setTimeout(() => {
       setMessage('');
     }, ONE_SECOND);
+  }
+
+  function handleFavoriteRecipe() {
+    addFavoriteRecipe(recipe);
   }
 
   if (!recipe) return <LoadingCard />;
@@ -78,7 +85,7 @@ function RecipeDetails() {
         <button type="button" onClick={ handleShareRecipe } data-testid="share-btn">
           <FiShare />
         </button>
-        <button type="button" onClick={ () => {} } data-testid="favorite-btn">
+        <button type="button" onClick={ handleFavoriteRecipe } data-testid="favorite-btn">
           <FiHeart />
         </button>
       </div>
