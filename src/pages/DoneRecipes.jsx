@@ -6,6 +6,7 @@ function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
     const recipesGetStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+
     if (recipesGetStorage === null) {
       return;
     }
