@@ -1,9 +1,9 @@
 const IN_PROGRESS_KEY = 'inProgressRecipes';
-const ALREADY_DONE_KEY = 'doneRecipes';
 const FAVORITE_RECIPES_KEY = 'favoriteRecipes';
 
 function readStorage(key, fallback = undefined) {
-  return JSON.parse(window.localStorage.getItem(key)) || fallback;
+  const data = window.localStorage.getItem(key);
+  return data ? JSON.parse(data) : fallback;
 }
 
 function writeStorage(key, value) {
@@ -14,12 +14,6 @@ function addInProgressRecipe(recipe) {
   const alreadyInProgress = readStorage(IN_PROGRESS_KEY, []);
 
   writeStorage([...alreadyInProgress, recipe]);
-}
-
-function addDoneRecipe(recipe) {
-  const alreadyDone = readStorage(ALREADY_DONE_KEY, []);
-
-  writeStorage([...alreadyDone, recipe]);
 }
 
 function addFavoriteRecipe(recipe) {
@@ -43,14 +37,13 @@ function getInProgressRecipeById(id) {
   return inProgressRecipes.meals?.[id] || inProgressRecipes.drinks?.[id];
 }
 
-function getDoneRecipeById(id) {
-  return readStorage(ALREADY_DONE_KEY, []).find((recipe) => recipe.id === id);
+function getFavoriteRecipeById(id) {
+  return readStorage(FAVORITE_RECIPES_KEY, []).find((recipe) => recipe.id === id);
 }
 
 export {
-  addDoneRecipe,
   addInProgressRecipe,
   addFavoriteRecipe,
-  getDoneRecipeById,
   getInProgressRecipeById,
+  getFavoriteRecipeById,
 };

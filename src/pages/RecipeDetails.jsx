@@ -1,28 +1,35 @@
 import copy from 'clipboard-copy';
 import React, { useEffect, useState, useMemo } from 'react';
-import { FiHeart, FiHome, FiShare } from 'react-icons/fi';
+import { FiHome, FiShare } from 'react-icons/fi';
 import { Link, NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 
 import styles from '../styles/pages/RecipeDetails.module.css';
+import filledHeartIcon from '../images/blackHeartIcon.svg';
+import outlineHeartIcon from '../images/whiteHeartIcon.svg';
 import LoadingCard from '../components/LoadingCard';
 import Recommendations from '../components/Recommendations';
 import RecipeVideo from '../components/RecipeVideo';
 import RecipeIngredients from '../components/RecipeIngredients';
 import { getDrinkById, getDrinks, getMealById, getMeals } from '../services/recipes';
-import { addFavoriteRecipe, getInProgressRecipeById } from '../services/storage';
+import {
+  addFavoriteRecipe,
+  getFavoriteRecipeById,
+  getInProgressRecipeById,
+} from '../services/storage';
 
 const RECOMMENDATIONS_LENGTH = 6;
 const ONE_SECOND = 1_000;
 let messageClearTimeoutId;
 
 function RecipeDetails() {
-  const [recipe, setRecipe] = useState(null);
-  const [recommendations, setRecommendations] = useState([]);
-  const [message, setMessage] = useState('');
-
   const { pathname } = useLocation();
   const { params } = useRouteMatch();
   const { id } = params;
+
+  const [recipe, setRecipe] = useState(null);
+  const [recommendations, setRecommendations] = useState([]);
+  const [message, setMessage] = useState('');
+  const [isFavorite, setFavorite] = useState(() => !!getFavoriteRecipeById(id));
 
   const isMeal = /^\/meals\/.*/i.test(pathname);
   const isDrink = /^\/drinks\/.*/i.test(pathname);
@@ -63,6 +70,7 @@ function RecipeDetails() {
 
   function handleFavoriteRecipe() {
     addFavoriteRecipe(recipe);
+    setFavorite((current) => !current);
   }
 
   if (!recipe) return <LoadingCard />;
@@ -85,8 +93,12 @@ function RecipeDetails() {
         <button type="button" onClick={ handleShareRecipe } data-testid="share-btn">
           <FiShare />
         </button>
-        <button type="button" onClick={ handleFavoriteRecipe } data-testid="favorite-btn">
-          <FiHeart />
+        <button type="button" onClick={ handleFavoriteRecipe }>
+          <img
+            src={ isFavorite ? filledHeartIcon : outlineHeartIcon }
+            alt=""
+            data-testid="favorite-btn"
+          />
         </button>
       </div>
 
