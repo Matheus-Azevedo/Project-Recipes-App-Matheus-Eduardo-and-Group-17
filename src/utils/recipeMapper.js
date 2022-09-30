@@ -20,12 +20,14 @@ function mapToRecipe(data, type = 'meal') {
     id: type === 'meal' ? data.idMeal : data.idDrink,
     title: type === 'meal' ? data.strMeal : data.strDrink,
     tags: data.strTags,
+    type,
     categories: data.strCategory,
     thumbnailUrl: type === 'meal' ? data.strMealThumb : data.strDrinkThumb,
     instructions: data.strInstructions,
     videoUrl: data.strYoutube,
     alcoholic: data.strAlcoholic,
     videoCode,
+    nationality: data.strArea,
     ingredients: Object.entries(data)
       .map(([key, value]) => ingredientMapper(data, key, value))
       .filter((value) => value !== null),
