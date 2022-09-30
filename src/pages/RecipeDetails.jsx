@@ -44,7 +44,9 @@ function RecipeDetails() {
     if (isDrink) {
       getDrinkById(id).then(setRecipe);
       getMeals().then((recipes) => setRecommendations(sliceArray(recipes)));
-    } else if (isMeal) {
+    }
+
+    if (isMeal) {
       getMealById(id).then(setRecipe);
       getDrinks().then((recipes) => setRecommendations(sliceArray(recipes)));
     }
