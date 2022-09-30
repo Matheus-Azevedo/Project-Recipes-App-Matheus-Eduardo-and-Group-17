@@ -6,7 +6,6 @@ export const drinksAPI = (data, categoryDrink) => ({
   type: 'DRINKS_API',
   data,
   categoryDrink,
-
 });
 
 export const mealsAPI = (data, categoryMeals) => ({
